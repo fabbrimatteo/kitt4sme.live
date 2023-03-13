@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: k4sme-ai4sdw-ai
+  name: k4sme-ai4sdw-ai
+spec:
+  ports:
+  - name: http
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: k4sme-ai4sdw-ai
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k4sme-ai4sdw-ai
+  name: k4sme-ai4sdw-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k4sme-ai4sdw-ai
+  template:
+    metadata:
+      labels:
+        app: k4sme-ai4sdw-ai
+    spec:
+      containers:
+        - image: "ghcr.io/berserkrambo/k4sme.ai4sdw.ai:main"
+          imagePullPolicy: Always
+          name: k4sme-ai4sdw-ai
+          ports:
+          - containerPort: 8000
+            name: http
+          env:
+          - name: "ORION_BASE_URL"
+            value: "http://orion:1026"

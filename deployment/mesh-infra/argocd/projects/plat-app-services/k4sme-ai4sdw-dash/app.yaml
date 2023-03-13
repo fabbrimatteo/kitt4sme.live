@@ -1,0 +1,9 @@
+- op: replace
+  path: /metadata/name
+  value: k4sme-ai4sdw-dash
+- op: replace
+  path: /spec/source/path
+  value: deployment/plat-app-services/k4sme-ai4sdw-dash
+- op: replace
+  path: /spec/project
+  value: plat-app-services

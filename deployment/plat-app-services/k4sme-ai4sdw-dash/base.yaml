@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: k4sme-ai4sdw-dash
+  name: k4sme-ai4sdw-dash
+spec:
+  ports:
+  - name: http
+    port: 8501
+    protocol: TCP
+    targetPort: 8501
+  selector:
+    app: k4sme-ai4sdw-dash
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k4sme-ai4sdw-dash
+  name: k4sme-ai4sdw-dash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k4sme-ai4sdw-dash
+  template:
+    metadata:
+      labels:
+        app: k4sme-ai4sdw-dash
+    spec:
+      containers:
+        - image: "ghcr.io/berserkrambo/k4sme.ai4sdw.dash:main"
+          imagePullPolicy: Always
+          name: k4sme-ai4sdw-dash
+          ports:
+          - containerPort: 8501
+            name: http
+          env:
+          - name: "STREAMLIT_SERVER_BASE_URL_PATH"
+            value: "/k4sme-ai4sdw-dash"
